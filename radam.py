@@ -64,7 +64,7 @@ class RAdam(Optimizer):
                 if group['weight_decay'] != 0:
                     p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
 
-                if N_sma > 5:                    
+                if N_sma > 4:                    
                     denom = exp_avg_sq.sqrt().add_(group['eps'])
                     p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
                 else:
