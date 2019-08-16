@@ -12,9 +12,9 @@ import torch.optim
 class RAdam(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
-                 weight_decay=0, amsgrad=False, use_variance=True):
+                 weight_decay=0, amsgrad=False):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad, use_variance=True)
+                        weight_decay=weight_decay, amsgrad=amsgrad)
 
         super(RAdam, self).__init__(params, defaults)
 
@@ -70,7 +70,8 @@ class RAdam(Optimizer):
                 if group['weight_decay'] != 0:
                     p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
 
-                if N_sma > 5:                    
+                # more conservative since it's an approximated value
+                if N_sma >= 5:                    
                     step_size = group['lr'] * ratio
                     denom = exp_avg_sq.sqrt().add_(group['eps'])
                     p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
@@ -86,9 +87,9 @@ class RAdam(Optimizer):
 class AdamW(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
-                 weight_decay=0, amsgrad=False, use_variance=True):
+                 weight_decay=0, amsgrad=False):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad, use_variance=True)
+                        weight_decay=weight_decay, amsgrad=amsgrad)
 
         super(AdamW, self).__init__(params, defaults)
 

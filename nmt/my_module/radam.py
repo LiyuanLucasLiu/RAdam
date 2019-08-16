@@ -13,10 +13,10 @@ import torch.optim
 # from ipdb import set_trace
 from fairseq.optim import FairseqOptimizer, register_optimizer
 
-from tensorboardX import SummaryWriter
-# writer = SummaryWriter(logdir='./log/wmt/')
-writer = SummaryWriter(logdir='./log/ada/')
-iter_idx = 0
+# from tensorboardX import SummaryWriter
+# # writer = SummaryWriter(logdir='./log/wmt/')
+# writer = SummaryWriter(logdir='./log/ada/')
+# iter_idx = 0
 
 @register_optimizer('radam')
 class FairseqRAdam(FairseqOptimizer):
@@ -114,12 +114,6 @@ class RAdam(torch.optim.Optimizer):
                 exp_avg, exp_avg_sq = state['exp_avg'], state['exp_avg_sq']
                 beta1, beta2 = group['betas']
 
-                # grad_var = grad - exp_avg / (1 - beta1 ** state['step'] + group['eps'])
-                # grad_var = grad #- exp_avg / (1 - beta1 ** state['step'] + group['eps'])
-                # grad_var = grad - exp_avg# / (1 - beta1 ** state['step'] + group['eps'])
-                # exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad_var, grad_var)
-
-
                 exp_avg_sq.mul_(beta2).addcmul_(1 - beta2, grad, grad)
                 exp_avg.mul_(beta1).add_(1 - beta1, grad)
 
@@ -132,10 +126,8 @@ class RAdam(torch.optim.Optimizer):
                 if group['weight_decay'] != 0:
                     p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
 
-                if N_sma > 4:
-                    # step_size = group['lr'] * math.sqrt((1 - beta2_t) * (N_sma - 4) / (N_sma_max - 4)) * (N_sma - 2) * (N_sma_max) / N_sma / (N_sma_max - 2)
-                    # step_size = group['lr'] * math.sqrt((1 - beta2_t) * (N_sma - 4) * (N_sma - 2) / (N_sma_max - 4) / N_sma) * (N_sma_max) / (N_sma_max - 2)
-                    # step_size = group['lr'] * math.sqrt((1 - beta2_t) * N_sma / N_sma_max)
+                # more conservative since it's an approximated value
+                if N_sma >= 5:
                     step_size = group['lr'] * math.sqrt((1 - beta2_t ) * (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) * (N_sma_max) / N_sma / (N_sma_max - 2)) / (1 - beta1 ** state['step'])
                     denom = exp_avg_sq.sqrt().add_(group['eps'])
                     p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
@@ -145,14 +137,14 @@ class RAdam(torch.optim.Optimizer):
 
                 p.data.copy_(p_data_fp32)
 
-                if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
-                    grad_list.extend( grad.abs().add_(1e-9).log().view(-1).tolist()  )
-                    mom_list.extend( exp_avg.abs().add_(1e-9).log().view(-1).tolist() )
-                    mom_2rd_list.extend( exp_avg_sq.abs().add_(1e-9).log().view(-1).tolist() )
+        #         if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
+        #             grad_list.extend( grad.abs().add_(1e-9).log().view(-1).tolist()  )
+        #             mom_list.extend( exp_avg.abs().add_(1e-9).log().view(-1).tolist() )
+        #             mom_2rd_list.extend( exp_avg_sq.abs().add_(1e-9).log().view(-1).tolist() )
 
-        if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
-            writer.add_histogram('grad/{}'.format(self.name), grad_list, writer_iter)
-            writer.add_histogram('mom/{}'.format(self.name), mom_list, writer_iter)
-            writer.add_histogram('mom_sq/{}'.format(self.name), mom_2rd_list, writer_iter)
+        # if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
+        #     writer.add_histogram('grad/{}'.format(self.name), grad_list, writer_iter)
+        #     writer.add_histogram('mom/{}'.format(self.name), mom_list, writer_iter)
+        #     writer.add_histogram('mom_sq/{}'.format(self.name), mom_2rd_list, writer_iter)
 
         return loss

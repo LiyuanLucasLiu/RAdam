@@ -1,5 +1,9 @@
 # RAdam
 
+In this paper, we study the problem why we need warmup for Adam and identifies the adaptive learning rate has an undesirably large variance in the early stage. 
+In principle, 
+
+
 We are in an early-release beta. Expect some adventures and rough edges.
 
 Detailed readme is still in process. 
