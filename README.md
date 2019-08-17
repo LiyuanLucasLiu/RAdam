@@ -12,6 +12,7 @@ We are in an early-release beta. Expect some adventures and rough edges.
 - [Questions and Discussions](#questions-and-discussions)
 - [Quick Start Guide](#quick-start-guide)
 - [Related Posts and Repos](#related-posts-and-repos)
+- [Citation](#citation)
 
 ## Introduction
 <h5 align="center"><i>If warmup is the answer, what is the question?</i></h5>
@@ -89,4 +90,18 @@ We are happy to see that our algorithms are found to be useful by some users : -
 
 <blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Thought &quot;sounds interesting, I&#39;ll give it a try&quot; - top 5 are vanilla Adam, bottom 4 (I only have access to 4 GPUs) are RAdam... so far looking pretty promising! <a href="https://t.co/irvJSeoVfx">pic.twitter.com/irvJSeoVfx</a></p>&mdash; Hamish Dickson (@_mishy) August 16, 2019</blockquote>
 
-<blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">RAdam works great for me! It’s good to several % accuracy for free, but the biggest thing I like is the training stability. RAdam is way more stable!<a href="https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943">https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943</a></p>&mdash; Grankin Mikhail August 17, 2019</blockquote>
+<blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">RAdam works great for me! It’s good to several % accuracy for free, but the biggest thing I like is the training stability. RAdam is way more stable! <a href="https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943">https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943</a></p>&mdash; Grankin Mikhail August 17, 2019</blockquote>
+
+## Citation
+Please cite the following paper if you found our model useful. Thanks!
+
+>Liu, Liyuan, Haoming Jiang, Pengcheng He, Weizhu Chen, Xiaodong Liu, Jianfeng Gao, and Jiawei Han. "On the Variance of the Adaptive Learning Rate and Beyond." arXiv preprint arXiv:1908.03265 (2019).
+
+```
+@article{liu2019radam,
+  title={On the Variance of the Adaptive Learning Rate and Beyond},
+  author={Liu, Liyuan and Jiang, Haoming and He, Pengcheng and Chen, Weizhu and Liu, Xiaodong and Gao, Jianfeng and Han, Jiawei},
+  journal={arXiv preprint arXiv:1908.03265},
+  year={2019}
+}
+```
