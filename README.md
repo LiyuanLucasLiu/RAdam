@@ -77,8 +77,9 @@ RAdam is very easy to implement, we provide PyTorch implementations here, while 
 We provide a simple introduction in [Motivation](#motivation), and more details can be found in our [paper](https://arxiv.org/abs/1908.03265). There are some unofficial introductions available (with better writings), and they are listed here for reference only (contents/claims in our paper are more accurate):
 
 [Medium Post](https://medium.com/@lessw/new-state-of-the-art-ai-optimizer-rectified-adam-radam-5d854730807b)
+> [related Twitter Post](https://twitter.com/jeremyphoward/status/1162118545095852032?ref_src=twsrc%5Etfw)
 
-[Twitter Post](https://twitter.com/jeremyphoward/status/1162118545095852032?ref_src=twsrc%5Etfw)
+[CSDN Post (in Chinese)](https://blog.csdn.net/u014248127/article/details/99696029)
 
 ### User Comments
 
