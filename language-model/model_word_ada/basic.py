@@ -3,7 +3,6 @@ import torch.nn as nn
 import torch.nn.functional as F
 import model_word_ada.utils as utils
 from model_word_ada.bnlstm import BNLSTM
-# from ipdb import set_trace
 
 class BasicUnit(nn.Module):
     def __init__(self, unit, input_dim, hid_dim, droprate):

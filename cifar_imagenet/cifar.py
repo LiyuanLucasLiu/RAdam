@@ -23,8 +23,8 @@ import models.cifar as models
 from utils import Bar, Logger, AverageMeter, accuracy, mkdir_p, savefig
 from utils.radam import RAdam, AdamW
 
-from tensorboardX import SummaryWriter
-writer = SummaryWriter(logdir='/cps/gadam/log_cifa10/')
+# from tensorboardX import SummaryWriter
+# writer = SummaryWriter(logdir='/cps/gadam/log_cifa10/')
 
 model_names = sorted(name for name in models.__dict__
     if name.islower() and not name.startswith("__")
@@ -44,7 +44,7 @@ parser.add_argument('--train-batch', default=128, type=int, metavar='N',
                     help='train batchsize')
 parser.add_argument('--test-batch', default=100, type=int, metavar='N',
                     help='test batchsize')
-parser.add_argument('--optimizer', default='sgd', type=str, choices=['adamw', 'cadam', 'sgd'])
+parser.add_argument('--optimizer', default='sgd', type=str, choices=['adamw', 'radam', 'sgd'])
 parser.add_argument('--lr', '--learning-rate', default=0.1, type=float,
                     metavar='LR', help='initial learning rate')
 parser.add_argument('--beta1', default=0.9, type=float,
@@ -184,10 +184,10 @@ def main():
     criterion = nn.CrossEntropyLoss()
     if args.optimizer.lower() == 'sgd':
         optimizer = optim.SGD(model.parameters(), lr=args.lr, momentum=args.momentum, weight_decay=args.weight_decay)
-    elif args.optimizer.lower() == 'adam':
-        optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
-    elif args.optimizer.lower() == 'cadam':
-        optimizer = CAdam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
+    # elif args.optimizer.lower() == 'adam':
+    #     optimizer = optim.Adam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
+    elif args.optimizer.lower() == 'radam':
+        optimizer = RAdam(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay)
     elif args.optimizer.lower() == 'adamw':
         optimizer = AdamW(model.parameters(), lr=args.lr, betas=(args.beta1, args.beta2), weight_decay=args.weight_decay, warmup=args.warmup)
     # Resume
@@ -225,10 +225,10 @@ def main():
 
         # append logger file
         logger.append([state['lr'], train_loss, test_loss, train_acc, test_acc])
-        writer.add_scalars('loss_tracking/train_loss', {args.model_name: train_loss}, epoch)
-        writer.add_scalars('loss_tracking/test_loss', {args.model_name: test_loss}, epoch)
-        writer.add_scalars('loss_tracking/train_acc', {args.model_name: train_acc}, epoch)
-        writer.add_scalars('loss_tracking/test_acc', {args.model_name: test_acc}, epoch)
+        # writer.add_scalars('loss_tracking/train_loss', {args.model_name: train_loss}, epoch)
+        # writer.add_scalars('loss_tracking/test_loss', {args.model_name: test_loss}, epoch)
+        # writer.add_scalars('loss_tracking/train_acc', {args.model_name: train_acc}, epoch)
+        # writer.add_scalars('loss_tracking/test_acc', {args.model_name: test_acc}, epoch)
 
         # save model
         is_best = test_acc > best_acc
@@ -370,4 +370,4 @@ def adjust_learning_rate(optimizer, epoch):
 
 if __name__ == '__main__':
     main()
-    writer.close()
+    # writer.close()

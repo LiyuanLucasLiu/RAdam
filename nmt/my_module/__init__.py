@@ -1,4 +1,3 @@
-from .ada2 import *
+from .radam import *
 from .adam2 import *
-from .adadelta import *
 from .linear_schedule import *

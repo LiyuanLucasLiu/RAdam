@@ -12,9 +12,9 @@ import torch.optim
 class RAdam(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
-                 weight_decay=0, amsgrad=False):
+                 weight_decay=0):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad)
+                        weight_decay=weight_decay)
 
         super(RAdam, self).__init__(params, defaults)
 
@@ -39,7 +39,6 @@ class RAdam(Optimizer):
                 grad = p.grad.data.float()
                 if grad.is_sparse:
                     raise RuntimeError('Adam does not support sparse gradients, please consider SparseAdam instead')
-                amsgrad = group['amsgrad']
 
                 p_data_fp32 = p.data.float()
 
@@ -87,9 +86,9 @@ class RAdam(Optimizer):
 class AdamW(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
-                 weight_decay=0, amsgrad=False):
+                 weight_decay=0):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad)
+                        weight_decay=weight_decay)
 
         super(AdamW, self).__init__(params, defaults)
 
@@ -115,7 +114,6 @@ class AdamW(Optimizer):
                 grad = p.grad.data.float()
                 if grad.is_sparse:
                     raise RuntimeError('Adam does not support sparse gradients, please consider SparseAdam instead')
-                amsgrad = group['amsgrad']
 
                 p_data_fp32 = p.data.float()
 

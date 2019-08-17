@@ -81,9 +81,9 @@ class RAdam(Optimizer):
 class AdamW(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8,
-                 weight_decay=0, amsgrad=False, use_variance=True, warmup = 4000):
+                 weight_decay=0, use_variance=True, warmup = 4000):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad, use_variance=True, warmup = warmup)
+                        weight_decay=weight_decay, use_variance=True, warmup = warmup)
         print('======== Warmup: {} ========='.format(warmup))
         super(AdamW, self).__init__(params, defaults)
 
@@ -109,7 +109,6 @@ class AdamW(Optimizer):
                 grad = p.grad.data.float()
                 if grad.is_sparse:
                     raise RuntimeError('Adam does not support sparse gradients, please consider SparseAdam instead')
-                amsgrad = group['amsgrad']
 
                 p_data_fp32 = p.data.float()
 
@@ -137,7 +136,6 @@ class AdamW(Optimizer):
                 
                 if group['warmup'] > state['step']:
                     scheduled_lr = 1e-6 + state['step'] * (group['lr'] - 1e-6) / group['warmup']
-                    # print(scheduled_lr)
                 else:
                     scheduled_lr = group['lr']
 

@@ -14,8 +14,8 @@ import torch.optim
 from fairseq.optim import FairseqOptimizer, register_optimizer
 
 from tensorboardX import SummaryWriter
-writer = SummaryWriter(logdir='./log/ada/')
-# writer = SummaryWriter(logdir='./log/wmt/')
+# writer = SummaryWriter(logdir='./log/ada/')
+# # writer = SummaryWriter(logdir='./log/wmt/')
 
 iter_idx = 0
 
@@ -96,10 +96,10 @@ class Adam2(torch.optim.Optimizer):
 
         for group in self.param_groups:
 
-            if 'adam_1k' in self.name:
-                writer_iter = iter_idx - group['adam_freeze']
-            else:
-                writer_iter = iter_idx
+            # if 'adam_1k' in self.name:
+            #     writer_iter = iter_idx - group['adam_freeze']
+            # else:
+            #     writer_iter = iter_idx
 
             for p in group['params']:
                 if p.grad is None:
@@ -145,21 +145,20 @@ class Adam2(torch.optim.Optimizer):
 
 
                 if 'adam_1k' not in self.name or state['step'] > group['adam_freeze']:
-
                     if group['weight_decay'] != 0:
                         p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
                     exp_avg.mul_(beta1).add_(1 - beta1, grad)
                     p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
                     p.data.copy_(p_data_fp32)
 
-                if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
-                    grad_list.extend( grad.abs().add_(1e-9).log().view(-1).tolist()  )
-                    mom_list.extend( exp_avg.abs().add_(1e-9).log().view(-1).tolist() )
-                    mom_2rd_list.extend( exp_avg_sq.abs().add_(1e-9).log().view(-1).tolist() )
+        #         if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
+        #             grad_list.extend( grad.abs().add_(1e-9).log().view(-1).tolist()  )
+        #             mom_list.extend( exp_avg.abs().add_(1e-9).log().view(-1).tolist() )
+        #             mom_2rd_list.extend( exp_avg_sq.abs().add_(1e-9).log().view(-1).tolist() )
 
-        if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
-            writer.add_histogram('grad/{}'.format(self.name), grad_list, writer_iter)
-            writer.add_histogram('mom/{}'.format(self.name), mom_list, writer_iter)
-            writer.add_histogram('mom_sq/{}'.format(self.name), mom_2rd_list, writer_iter)
+        # if writer_iter > 0 and writer_iter % 300 == 0 or writer_iter in [1, 5, 10, 25, 50, 75, 100, 150, 200]:
+        #     writer.add_histogram('grad/{}'.format(self.name), grad_list, writer_iter)
+        #     writer.add_histogram('mom/{}'.format(self.name), mom_list, writer_iter)
+        #     writer.add_histogram('mom_sq/{}'.format(self.name), mom_2rd_list, writer_iter)
 
         return loss

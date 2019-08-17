@@ -66,12 +66,8 @@ if __name__ == "__main__":
     parser.add_argument('--train_folder', default="/data/billionwords/1-billion-word-language-modeling-benchmark/training-monolingual.tokenized.shuffled")
     parser.add_argument('--test_folder', default="/data/billionwords/1-billion-word-language-modeling-benchmark/heldout-monolingual.tokenized.shuffled")
     parser.add_argument('--input_map', default="/data/billionwords/1b_map.pk")
-    # parser.add_argument('--output_folder', default="/data/billionwords/one_billion/")
-    # parser.add_argument('--threshold', type=int, default=3)
-
-    parser.add_argument('--output_folder', default="/data/billionwords/one_billion_full/")
-    parser.add_argument('--threshold', type=int, default=0)
-
+    parser.add_argument('--output_folder', default="/data/billionwords/one_billion/")
+    parser.add_argument('--threshold', type=int, default=3)
     parser.add_argument('--unk', default='<unk>')
     parser.add_argument('--reverse', action='store_true')
     args = parser.parse_args()

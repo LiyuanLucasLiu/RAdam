@@ -24,8 +24,8 @@ import models.imagenet as customized_models
 from utils import Bar, Logger, AverageMeter, accuracy, mkdir_p, savefig
 from utils.radam import RAdam, AdamW
 
-from tensorboardX import SummaryWriter
-writer = SummaryWriter(logdir='/cps/gadam/log_imagenet/')
+# from tensorboardX import SummaryWriter
+# writer = SummaryWriter(logdir='/cps/gadam/log_imagenet/')
 
 # Models
 default_model_names = sorted(name for name in models.__dict__
@@ -218,10 +218,10 @@ def main():
         # append logger file
         logger.append([state['lr'], train_loss, test_loss, train_acc, test_acc])
 
-        writer.add_scalars('loss_tracking/train_loss', {args.model_name: train_loss}, epoch)
-        writer.add_scalars('loss_tracking/test_loss', {args.model_name: test_loss}, epoch)
-        writer.add_scalars('loss_tracking/train_acc', {args.model_name: train_acc}, epoch)
-        writer.add_scalars('loss_tracking/test_acc', {args.model_name: test_acc}, epoch)
+        # writer.add_scalars('loss_tracking/train_loss', {args.model_name: train_loss}, epoch)
+        # writer.add_scalars('loss_tracking/test_loss', {args.model_name: test_loss}, epoch)
+        # writer.add_scalars('loss_tracking/train_acc', {args.model_name: train_acc}, epoch)
+        # writer.add_scalars('loss_tracking/test_acc', {args.model_name: test_acc}, epoch)
 
         # save model
         is_best = test_acc > best_acc
@@ -363,3 +363,5 @@ def adjust_learning_rate(optimizer, epoch):
 
 if __name__ == '__main__':
     main()
+    # writer.close()
+    

@@ -19,8 +19,8 @@ from model_word_ada.dataset import LargeDataset, EvalDataset
 from model_word_ada.adaptive import AdaptiveSoftmax
 import model_word_ada.utils as utils
 
-from tensorboardX import SummaryWriter
-writer = SummaryWriter(logdir='./cps/gadam/log_1bw_full/')
+# from tensorboardX import SummaryWriter
+# writer = SummaryWriter(logdir='./cps/gadam/log_1bw_full/')
 
 import argparse
 import json
@@ -55,8 +55,7 @@ def evaluate(data_loader, lm_model, criterion, limited = 76800):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
-    # parser.add_argument('--dataset_folder', default='/data/billionwords/one_billion/')
-    parser.add_argument('--dataset_folder', default='./data/billionwords/one_billion_full/')
+    parser.add_argument('--dataset_folder', default='/data/billionwords/one_billion/')
     parser.add_argument('--load_checkpoint', default='')
     parser.add_argument('--batch_size', type=int, default=128)
     parser.add_argument('--sequence_length', type=int, default=20)
@@ -70,7 +69,7 @@ if __name__ == "__main__":
     parser.add_argument('--gpu', type=int, default=1)
     parser.add_argument('--epoch', type=int, default=14)
     parser.add_argument('--clip', type=float, default=5)
-    parser.add_argument('--update', choices=['Adam', 'Adagrad', 'Adadelta', 'RAdam', 'SGD'], default='Adam', help='adam is the best')
+    parser.add_argument('--update', choices=['Adam', 'Adagrad', 'Adadelta', 'RAdam', 'SGD'], default='Adam')
     parser.add_argument('--rnn_layer', choices=['Basic', 'DDNet', 'DenseNet', 'LDNet'], default='Basic')
     parser.add_argument('--rnn_unit', choices=['gru', 'lstm', 'rnn', 'bnlstm'], default='lstm')
     parser.add_argument('--lr', type=float, default=-1)
@@ -78,7 +77,6 @@ if __name__ == "__main__":
     parser.add_argument('--cut_off', nargs='+', default=[4000,40000,200000])
     parser.add_argument('--interval', type=int, default=100)
     parser.add_argument('--check_interval', type=int, default=4000)
-    parser.add_argument('--patience', type=float, default=10)
     parser.add_argument('--checkpath', default='./cps/gadam/')
     parser.add_argument('--model_name', default='adam')
     args = parser.parse_args()
@@ -128,13 +126,8 @@ if __name__ == "__main__":
     
     test_lm.cuda()
     lm_model.cuda()
-
-    # writer = SummaryWriter(log_dir='./runs_1b/'+args.log_dir)
-    # name_list = ['batch_loss', 'train_ppl', 'test_ppl']
-    # bloss, tr_ppl, te_ppl = [args.log_dir+'/'+tup for tup in name_list]
-
+    
     batch_index = 0
-    patience = 0
     epoch_loss = 0
     full_epoch_loss = 0
     best_train_ppl = float('inf')
@@ -169,37 +162,24 @@ if __name__ == "__main__":
 
                 if 0 == batch_index % args.interval:
                     s_loss = utils.to_scalar(loss)
-                    # writer.add_scalar(bloss, s_loss, batch_index)
-                    writer.add_scalars('loss_tracking/train_loss', {args.model_name:s_loss}, batch_index)
+                    # writer.add_scalars('loss_tracking/train_loss', {args.model_name:s_loss}, batch_index)
                 
                 epoch_loss += utils.to_scalar(loss)
                 full_epoch_loss += utils.to_scalar(loss)
                 if 0 == batch_index % args.check_interval:
                     epoch_ppl = math.exp(epoch_loss / args.check_interval)
-                    writer.add_scalars('loss_tracking/train_ppl', {args.model_name: epoch_ppl}, batch_index)
+                    # writer.add_scalars('loss_tracking/train_ppl', {args.model_name: epoch_ppl}, batch_index)
                     print('epoch_ppl: {} lr: {} @ batch_index: {}'.format(epoch_ppl, cur_lr, batch_index))
-                    # if epoch_loss < best_train_ppl:
-                    #     best_train_ppl = epoch_loss
-                    #     patience = 0
-                    # else:
-                    #     patience += 1
                     epoch_loss = 0
 
-                # if patience > args.patience and cur_lr > 0:
-                #     patience = 0
-                #     best_train_ppl = float('inf')
-                #     cur_lr *= 0.1
-                #     print('adjust_learning_rate...')
-                #     utils.adjust_learning_rate(optimizer, cur_lr)
-
-            if indexs in args.lr_decay  and cur_lr > 0:
+            if indexs in args.lr_decay and cur_lr > 0:
                 cur_lr *= 0.1
                 print('adjust_learning_rate...')
                 utils.adjust_learning_rate(optimizer, cur_lr)
     
             test_ppl = evaluate(test_loader, lm_model, test_lm, -1)
 
-            writer.add_scalars('loss_tracking/test_ppl', {args.model_name: test_ppl}, indexs)
+            # writer.add_scalars('loss_tracking/test_ppl', {args.model_name: test_ppl}, indexs)
             print('test_ppl: {} @ index: {}'.format(test_ppl, indexs))
         
             torch.save({'lm_model': lm_model.state_dict(), 'opt':optimizer.state_dict()}, args.checkpath+args.model_name+'.model')
@@ -208,8 +188,8 @@ if __name__ == "__main__":
 
         print('Exiting from training early')
         test_ppl = evaluate(test_loader, lm_model, test_lm, -1)
-        writer.add_scalars('loss_tracking/test_ppl', {args.model_name: test_ppl}, args.epoch)
+        # writer.add_scalars('loss_tracking/test_ppl', {args.model_name: test_ppl}, args.epoch)
 
         torch.save({'lm_model': lm_model.state_dict(), 'opt':optimizer.state_dict()}, args.checkpath+args.model_name+'.model')
 
-    writer.close()
+    # writer.close()
