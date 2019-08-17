@@ -84,6 +84,8 @@ We provide a simple introduction in [Motivation](#motivation), and more details 
 
 We are happy to see that our algorithms are found to be useful by some users : -)
 
-<blockquote data-lang="en"><p lang="en" dir="ltr">&quot;...I tested it on ImageNette and quickly got new high accuracy scores for the 5 and 20 epoch 128px leaderboard scores, so I know it works... <a href=https://t.co/1MZmTbmFjn>https://t.co/1MZmTbmFjn</a></p>&mdash; Less Wright August 15, 2019</blockquote>
+<blockquote data-lang="en"><p lang="en" dir="ltr">&quot;...I tested it on ImageNette and quickly got new high accuracy scores for the 5 and 20 epoch 128px leaderboard scores, so I know it works... <a href=https://forums.fast.ai/t/meet-radam-imo-the-new-state-of-the-art-ai-optimizer/52656>https://forums.fast.ai/t/meet-radam-imo-the-new-state-of-the-art-ai-optimizer/52656</a></p>&mdash; Less Wright August 15, 2019</blockquote>
 
 <blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">Thought &quot;sounds interesting, I&#39;ll give it a try&quot; - top 5 are vanilla Adam, bottom 4 (I only have access to 4 GPUs) are RAdam... so far looking pretty promising! <a href="https://t.co/irvJSeoVfx">pic.twitter.com/irvJSeoVfx</a></p>&mdash; Hamish Dickson (@_mishy) August 16, 2019</blockquote>
+
+<blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">RAdam works great for me! It’s good to several % accuracy for free, but the biggest thing I like is the training stability. RAdam is way more stable!<a href="https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943">https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943</a></p>&mdash; Grankin Mikhail August 17, 2019</blockquote>
