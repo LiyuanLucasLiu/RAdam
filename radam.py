@@ -146,7 +146,7 @@ class AdamW(Optimizer):
 
     def __init__(self, params, lr=1e-3, betas=(0.9, 0.999), eps=1e-8, weight_decay=0, warmup = 0):
         defaults = dict(lr=lr, betas=betas, eps=eps,
-                        weight_decay=weight_decay, amsgrad=amsgrad, warmup = warmup)
+                        weight_decay=weight_decay, warmup = warmup)
         super(AdamW, self).__init__(params, defaults)
 
     def __setstate__(self, state):
