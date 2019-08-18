@@ -85,7 +85,7 @@ python cifar.py -a resnet --depth 20 --epochs 164 --schedule 81 122 --gamma 0.1 
 # ImageNet
 
 ```
-python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0003 --model_name radam_0003 --optimizer radam --lr 0.0003 --beta1 0.9 --beta2 0.999
+python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0003 --model_name radam_0003 --optimizer radam --lr 0.003 --beta1 0.9 --beta2 0.999
 
-python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0005 --model_name radam_0005 --optimizer radam --lr 0.0005 --beta1 0.9 --beta2 0.999
+python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0005 --model_name radam_0005 --optimizer radam --lr 0.005 --beta1 0.9 --beta2 0.999
 ```
