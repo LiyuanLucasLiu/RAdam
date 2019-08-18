@@ -81,3 +81,11 @@ python cifar.py -a resnet --depth 20 --epochs 164 --schedule 81 122 --gamma 0.1 
 
 python cifar.py -a resnet --depth 20 --epochs 164 --schedule 81 122 --gamma 0.1 --wd 1e-4 --optimizer adamw  --beta1 0.9 --beta2 0.999  --checkpoint /cps/gadam/checkpoints/cifar10/resnet-20-adam-0003 --gpu-id 0 --warmup 1000 --model_name adam_1000_0003 --lr 0.003
 ```
+
+# ImageNet
+
+```
+python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0003 --model_name radam_0003 --optimizer radam --lr 0.0003 --beta1 0.9 --beta2 0.999
+
+python imagenet.py -j 16 -a resnet18 --data /data/ILSVRC2012/ --epochs 90 --schedule 31 61 --gamma 0.1 -c /cps/imagenet/resnet18_radam_0005 --model_name radam_0005 --optimizer radam --lr 0.0005 --beta1 0.9 --beta2 0.999
+```
