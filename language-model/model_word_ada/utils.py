@@ -13,7 +13,7 @@ def sparse_clip_norm(parameters, max_norm):
     max_norm = float(max_norm)
     total_norm = 0
     for p in parameters:
-        if is_sparse(p.grad):
+        if p.grad.is_sparse:
             # need to coalesce the repeated indices before finding norm
             grad = p.grad.data.coalesce()
             param_norm = grad._values().norm()
@@ -24,7 +24,7 @@ def sparse_clip_norm(parameters, max_norm):
     clip_coef = max_norm / (total_norm + 1e-6)
     if clip_coef < 1:
         for p in parameters:
-            if is_sparse(p.grad):
+            if p.grad.is_sparse:
                 p.grad.data._values().mul_(clip_coef)
             else:
                 p.grad.data.mul_(clip_coef)
