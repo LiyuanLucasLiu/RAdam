@@ -8,28 +8,6 @@ import torch.nn.init
 
 from torch.autograd import Variable
 
-def sparse_clip_norm(parameters, max_norm):
-    parameters = list(filter(lambda x: x.grad, parameters))
-    max_norm = float(max_norm)
-    total_norm = 0
-    for p in parameters:
-        if p.grad.is_sparse:
-            # need to coalesce the repeated indices before finding norm
-            grad = p.grad.data.coalesce()
-            param_norm = grad._values().norm()
-        else:
-            param_norm = p.grad.data.norm()
-        total_norm += param_norm ** 2
-    total_norm = total_norm ** (1. / 2)
-    clip_coef = max_norm / (total_norm + 1e-6)
-    if clip_coef < 1:
-        for p in parameters:
-            if p.grad.is_sparse:
-                p.grad.data._values().mul_(clip_coef)
-            else:
-                p.grad.data.mul_(clip_coef)
-    return total_norm
-
 def repackage_hidden(h):
     """Wraps hidden states in new Variables, to detach them from their history."""
     if type(h) == torch.Tensor:
