@@ -265,7 +265,7 @@ def train(trainloader, model, criterion, optimizer, epoch, use_cuda):
         data_time.update(time.time() - end)
 
         if use_cuda:
-            inputs, targets = inputs.cuda(), targets.cuda(async=True)
+            inputs, targets = inputs.cuda(), targets.cuda(non_blocking=True)
         inputs, targets = torch.autograd.Variable(inputs), torch.autograd.Variable(targets)
 
         # compute output
