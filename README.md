@@ -18,7 +18,7 @@ We are in an early-release beta. Expect some adventures and rough edges.
 ## Introduction
 <h5 align="center"><i>If warmup is the answer, what is the question?</i></h5>
 
-The learning rate warmup for Adam is a must-have trick for stable training in certain situations. But the underlying mechanism is largely unknown. In our study, we suggest one fundamental cause is __the large variance of the adaptive learning rates__, and provide both theoretical and empirical support evidence.
+The learning rate warmup for Adam is a must-have trick for stable training in certain situations (or eps tuning). But the underlying mechanism is largely unknown. In our study, we suggest one fundamental cause is __the large variance of the adaptive learning rates__, and provide both theoretical and empirical support evidence.
 
 In addition to explaining __why we should use warmup__, we also propose __RAdam__, a theoretically sound variant of Adam. 
 
@@ -26,7 +26,7 @@ In addition to explaining __why we should use warmup__, we also propose __RAdam_
 
 As in Figure 8, we assume gradients follows a normal distribution (mean: \mu, variance: 1). The variance of the adaptive learning rate is simulated and plotted in Figure 8 (blue curve). We can see that the adaptive learning rate has a large variance in the early stage of training.
 
-<p align="center"><img width="100%" src="img/variance.jpg"/></p>
+<p align="center"><img width="100%" src="img/variance.png"/></p>
 
 When using the Transformer for NMT, a warmup stage is usually required to avoid convergence problems (Adam-vanilla converges around 500 PPL in Figure 1, while Adam-warmup successfully converges under 10 PPL).
 In further explorations, we notice that, if we use additional 2000 samples to estimate the adaptive learning rate, the convergence problems are avoided (Adam-2k); or, if we increase the value of eps, the convergence problems are also relieved (Adam-eps).
