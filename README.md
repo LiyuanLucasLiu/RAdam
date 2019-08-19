@@ -19,7 +19,7 @@ We are in an early-release beta. Expect some adventures and rough edges.
 
 The learning rate warmup for Adam is a must-have trick for stable training in certain situations. But the underlying mechanism is largely unknown. In our study, we suggest one fundamental cause is __the large variance of the adaptive learning rates__, and provide both theoretical and empirical support evidence.
 
-In addition to explaining __why we should use warmup__, we also purpose __RAdam__, a theoretically sound variant of Adam. 
+In addition to explaining __why we should use warmup__, we also propose __RAdam__, a theoretically sound variant of Adam. 
 
 ## Motivation
 
@@ -48,11 +48,11 @@ __Sensitivity__
 
 We observe the Transformer is sensitive to the architecture configuration, despite its efficiency and effectiveness. For example, by changing the position of the layer norm, the model may / may not require the warmup to get a good performance. Intuitively, since the gradient of the attention layer could be more sparse and the adaptive learning rates for smaller gradients have a larger variance, they are more sensitive. Nevertheless, we believe this problem deserves more in-depth analysis and is beyond the scope of our study.
 
-### Why warmup has a bigger impact on some model than others?
+### Why does warmup have a bigger impact on some models than others?
 
 Although the adaptive learning rate has a larger variance in the early stage, the exact magnitude is subject to the model design. Thus, the convergent problem could be more serious for some models/tasks than others. In our experiments, we observe RAdam achieves consistent improvements over the vanilla Adam. It verifies the variance issue widely exists (since we can get better performance by fixing it). 
 
-### Why SGD needs warmup?
+### Why does SGD need warmup?
 
 To the best of our knowledge, the warmup heuristic is originally designed for large minibatch SGD [0], based on the intuition that the network changes rapidly in the early stage. However, we find that it __does not__ explain why Adam requires warmup. Notice that, Adam-2k uses the same large learning rate but with a better estimation of the adaptive learning rate can also avoid the convergence problems.
 
