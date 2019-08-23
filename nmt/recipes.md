@@ -42,3 +42,11 @@ do
     bash eval.sh /cps/gadam/nmt/radam_$SEED 0 >> results_f_5.txt
 done
 ```
+
+# Novograd
+We also implemented [novograd](https://arxiv.org/pdf/1905.11286.pdf), which claims no warmup is requried. 
+We tried the following settings with with lr=0.03, 0.0003, 0.00003, 0.00001, none of these works without warmup. 
+
+```
+CUDA_VISIBLE_DEVICES=0 fairseq-train ./data-bin/iwslt14.tokenized.de-en -a transformer_iwslt_de_en --optimizer novograd --lr 0.0003 -s en -t de --label-smoothing 0.1 --dropout 0.3 --max-tokens 4000 --min-lr '1e-09' --lr-scheduler poly --weight-decay 5e-5 --criterion label_smoothed_cross_entropy --max-update 70000  --adam-betas '(0.9, 0.999)' --save-dir /ckp/nmt/novograd --tb-tag novograd --user-dir ./my_module --fp16 --restore-file x.pt
+```
