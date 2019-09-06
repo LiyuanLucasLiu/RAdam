@@ -195,7 +195,7 @@ class AdamW(Optimizer):
                 else:
                     scheduled_lr = group['lr']
 
-                step_size = group['lr'] * math.sqrt(bias_correction2) / bias_correction1
+                step_size = scheduled_lr * math.sqrt(bias_correction2) / bias_correction1
                 
                 if group['weight_decay'] != 0:
                     p_data_fp32.add_(-group['weight_decay'] * scheduled_lr, p_data_fp32)
