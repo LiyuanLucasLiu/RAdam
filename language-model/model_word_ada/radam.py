@@ -64,7 +64,8 @@ class RAdam(Optimizer):
                     N_sma_max = 2 / (1 - beta2) - 1
                     N_sma = N_sma_max - 2 * state['step'] * beta2_t / (1 - beta2_t)
                     beta1_t = 1 - beta1 ** state['step']
-                    ratio = math.sqrt((1 - beta2_t) * (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) / beta1_t
+                    if N_sma >= 5:
+                        ratio = math.sqrt((1 - beta2_t) * (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) / N_sma * N_sma_max / (N_sma_max - 2)) / beta1_t
 
                 if group['weight_decay'] != 0:
                     p_data_fp32.add_(-group['weight_decay'] * group['lr'], p_data_fp32)
