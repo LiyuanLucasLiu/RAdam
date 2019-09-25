@@ -11,7 +11,7 @@ else
     echo "End averaging model"
 fi
 
-CUDA_VISIBLE_DEVICES=$GPUDEV fairseq-eval-lm data-bin/iwslt14.tokenized.de-en \
+CUDA_VISIBLE_DEVICES=$GPUDEV fairseq-generate data-bin/iwslt14.tokenized.de-en \
                     --path $MODELDIR \
                     --batch-size 128 --beam 5 --remove-bpe \
                     --user-dir ./my_module 2>&1 | grep BLEU4
