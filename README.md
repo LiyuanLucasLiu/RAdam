@@ -97,6 +97,11 @@ We are happy to see that our algorithms are found to be useful by some users : -
 
 <blockquote data-conversation="none" data-lang="en"><p lang="en" dir="ltr">RAdam works great for me! It’s good to several % accuracy for free, but the biggest thing I like is the training stability. RAdam is way more stable! <a href="https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943">https://medium.com/@mgrankin/radam-works-great-for-me-344d37183943</a></p>&mdash; Grankin Mikhail August 17, 2019</blockquote>
 
+<blockquote data-lang="en"><p lang="en" dir="ltr">&quot;... Also, I achieved higher accuracy results using the newly proposed RAdam optimization function.... <a href=https://towardsdatascience.com/optimism-is-on-the-menu-a-recession-is-not-d87cce265b10>
+https://towardsdatascience.com/optimism-is-on-the-menu-a-recession-is-not-d87cce265b10</a></p>&mdash; Sameer Ahuja August 24, 2019</blockquote>
+
+<blockquote data-lang="en"><p lang="en" dir="ltr">&quot;... Out-of-box RAdam implementation performs better than Adam and finetuned SGD... <a href=https://twitter.com/ukrdailo/status/1166265186920980480>https://twitter.com/ukrdailo/status/1166265186920980480</a></p>&mdash; Alex Dailo August 27, 2019</blockquote>
+
 ## Citation
 Please cite the following paper if you found our model useful. Thanks!
 
