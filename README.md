@@ -53,6 +53,12 @@ We observe that the Transformer is sensitive to the architecture configuration, 
 
 Although the adaptive learning rate has a larger variance in the early stage, the exact magnitude is subject to the model design. Thus, the convergent problem could be more serious for some models/tasks than others. In our experiments, we observe that RAdam achieves consistent improvements over the vanilla Adam. It verifies the variance issue widely exists (since we can get better performance by fixing it). 
 
+### What if the gradient is not zero-meaned?
+
+As in Figure 1 (as above), even if the gradient is not zero-meaned, the original adaptive learning rate still has a larger variance in the beginning, and applying the rectification can help to stabilize the training.
+
+Another related concern is that, when the mean of the gradient is significantly larger than its variance, the magnitude of the "problematic" variance may not be very large (i.e., in Figure 1, when \mu equals to 10, the adaptive learning rate variance is relative small and may not cause problems). We think it provides a possible explaination on why warmup have a bigger impact on some models than others. Still, we suggest that, in real-world applications, neural networks usually have some parts of parameters meets our assumption (i.e., their gradient variance is larger than their gradient mean), and needs the rectification to stabilize the training. 
+
 ### Why does SGD need warmup?
 
 To the best of our knowledge, the warmup heuristic is originally designed for large minibatch SGD [0], based on the intuition that the network changes rapidly in the early stage. However, we find that it __does not__ explain why Adam requires warmup. Notice that, Adam-2k uses the same large learning rate but with a better estimation of the adaptive learning rate can also avoid the convergence problems.
