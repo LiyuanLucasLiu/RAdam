@@ -73,7 +73,7 @@ The reason why sometimes warmup also helps SGD still lacks of theoretical suppor
 1. Directly replace the vanilla Adam with RAdam without changing any settings. 
 2. Further tune hyper-parameters (including the learning rate) for a better performance.
 
-Note that in our paper, our major contribution is __to identify why we need the warmup for Adam__. Although some researchers successfully improve their model performance (__[user comments](#user-comments)__), directly plugging in RAdam __may not__ result in an immediate performance boost. Based on our experience, replacing __the vanilla Adam__ with RAdam usually results in a better performance; however, if __warmup has already been employed and tuned__ in the baseline method, it is necessary to tune hyper-parameters for RAdam. 
+Note that in our paper, our major contribution is __to identify why we need the warmup for Adam__. Although some researchers successfully improve their model performance (__[user comments](#user-comments)__), considering the difficulty of training NNs, directly plugging in RAdam __may not__ result in an immediate performance boost. Based on our experience, replacing __the vanilla Adam__ with RAdam usually results in a better performance; however, if __warmup has already been employed and tuned__ in the baseline method, it is necessary to also tune hyper-parameters for RAdam. 
 
 ## Related Posts and Repos
 
