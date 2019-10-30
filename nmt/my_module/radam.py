@@ -22,7 +22,7 @@ from fairseq.optim import FairseqOptimizer, register_optimizer
 class FairseqRAdam(FairseqOptimizer):
 
     def __init__(self, args, params):
-        super().__init__(args, params)
+        super().__init__(args)
 
         self._optimizer = RAdam(params, **self.optimizer_config)
         self._optimizer.name = args.tb_tag + '_' + self._optimizer.name
@@ -77,13 +77,13 @@ class RAdam(torch.optim.Optimizer):
             closure (callable, optional): A closure that reevaluates the model
                 and returns the loss.
         """
-        global iter_idx
-        iter_idx += 1
-        grad_list = list()
-        mom_list = list()
-        mom_2rd_list = list()
+        # global iter_idx
+        # iter_idx += 1
+        # grad_list = list()
+        # mom_list = list()
+        # mom_2rd_list = list()
         assert 'adam_1k' not in self.name
-        writer_iter = iter_idx
+        # writer_iter = iter_idx
 
         loss = None
         if closure is not None:
@@ -131,6 +131,7 @@ class RAdam(torch.optim.Optimizer):
                     step_size = group['lr'] * math.sqrt((1 - beta2_t ) * (N_sma - 4) / (N_sma_max - 4) * (N_sma - 2) * (N_sma_max) / N_sma / (N_sma_max - 2)) / (1 - beta1 ** state['step'])
                     denom = exp_avg_sq.sqrt().add_(group['eps'])
                     p_data_fp32.addcdiv_(-step_size, exp_avg, denom)
+                    # p.data.copy_(p_data_fp32)
                 else:
                     step_size = group['lr'] / (1 - beta1 ** state['step'])
                     p_data_fp32.add_(-step_size, exp_avg)

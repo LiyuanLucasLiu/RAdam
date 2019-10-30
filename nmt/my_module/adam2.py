@@ -23,7 +23,7 @@ iter_idx = 0
 class FairseqAdam2(FairseqOptimizer):
 
     def __init__(self, args, params):
-        super().__init__(args, params)
+        super().__init__(args)
 
         self._optimizer = Adam2(params, **self.optimizer_config)
         self._optimizer.name = args.tb_tag + '_' + self._optimizer.name

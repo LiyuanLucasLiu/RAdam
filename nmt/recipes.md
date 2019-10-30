@@ -13,6 +13,17 @@ do
 
     bash eval.sh /cps/gadam/nmt/adam_warmup_f_$SEED 0 >> results_f_5.txt
 done
+
+CUDA_VISIBLE_DEVICES=5 fairseq-train \
+    ../data-bin/iwslt14.tokenized.de-en \
+    --arch transformer_iwslt_de_en 
+    --optimizer adam2 --adam-betas '(0.9, 0.9995)'\
+    --lr 5e-5 --lr-scheduler linear --warmup-updates 4000 --warmup-init-lr 1e-8 --max-update 70000 \
+    --dropout 0.3 --weight-decay 0.0001 \
+    --criterion label_smoothed_cross_entropy --label-smoothing 0.1 \
+    --save-dir ../cps/70k-adam-9995 --restore-file x.pt \
+    --encoder-ffn-embed-dim 1024 --decoder-ffn-embed-dim 1024 \
+    --max-tokens 4096 --user-dir ./my_module
 ```
 
 # Adam-2k
@@ -41,6 +52,30 @@ do
 
     bash eval.sh /cps/gadam/nmt/radam_$SEED 0 >> results_f_5.txt
 done
+
+--share-decoder-input-output-embed \
+
+CUDA_VISIBLE_DEVICES=6 fairseq-train \
+    ../data-bin/iwslt14.tokenized.de-en \
+    --arch transformer_iwslt_de_en -s de -t en \
+    --optimizer radam --adam-betas '(0.9, 0.9995)' --min-lr '1e-09'\
+    --lr 3e-4 --lr-scheduler linear --warmup-updates 1 --max-update 70000 \
+    --dropout 0.3 --weight-decay 0.0001 \
+    --criterion label_smoothed_cross_entropy --label-smoothing 0.1 \
+    --save-dir ../cps/70k-radam-9995 --restore-file x.pt \
+    --encoder-ffn-embed-dim 1024 --decoder-ffn-embed-dim 1024 \
+    --max-tokens 4096 --user-dir ./my_module
+
+CUDA_VISIBLE_DEVICES=5 fairseq-train \
+    ../data-bin/iwslt14.tokenized.de-en \
+    --arch transformer_iwslt_de_en -s de -t en \
+    --optimizer radam --adam-betas '(0.9, 0.999)' --min-lr '1e-09'\
+    --lr 3e-4 --lr-scheduler linear --warmup-updates 1 --max-update 70000 \
+    --dropout 0.3 --weight-decay 0.0001 \
+    --criterion label_smoothed_cross_entropy --label-smoothing 0.1 \
+    --save-dir ../cps/70k-radam-999 --restore-file x.pt \
+    --encoder-ffn-embed-dim 1024 --decoder-ffn-embed-dim 1024 \
+    --max-tokens 4096 --user-dir ./my_module
 ```
 
 # Novograd
