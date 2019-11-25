@@ -1,4 +1,5 @@
 from setuptools import setup, find_packages
+import re
 
 try:
     import torch
@@ -24,6 +25,6 @@ setup(
     author='Liyuan Liu',
     author_email='llychinalz@gmail.com',
     description='Implementation of the RAdam optimization algorithm described in On the Variance of the Adaptive Learning Rate and Beyond (https://arxiv.org/abs/1908.03265)',
-    packages=find_packages(),    
+    packages=find_packages(),
     install_requires=install_requires,
 )
