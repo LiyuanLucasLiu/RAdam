@@ -9,7 +9,7 @@ except ImportError:
 
 # Base equirements
 install_requires = [
-    "torch>=1.0.0",
+    "torch",
 ]
 
 if has_dev_pytorch:  # Remove the PyTorch requirement
