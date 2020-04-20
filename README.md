@@ -111,13 +111,15 @@ https://towardsdatascience.com/optimism-is-on-the-menu-a-recession-is-not-d87cce
 ## Citation
 Please cite the following paper if you found our model useful. Thanks!
 
->Liyuan Liu, Haoming Jiang, Pengcheng He, Weizhu Chen, Xiaodong Liu, Jianfeng Gao, and Jiawei Han. "On the Variance of the Adaptive Learning Rate and Beyond." arXiv preprint arXiv:1908.03265 (2019).
+>Liyuan Liu , Haoming Jiang, Pengcheng He, Weizhu Chen, Xiaodong Liu, Jianfeng Gao, and Jiawei Han (2020). On the Variance of the Adaptive Learning Rate and Beyond. the Eighth International Conference on Learning Representations.
 
 ```
-@article{liu2019radam,
-  title={On the Variance of the Adaptive Learning Rate and Beyond},
-  author={Liu, Liyuan and Jiang, Haoming and He, Pengcheng and Chen, Weizhu and Liu, Xiaodong and Gao, Jianfeng and Han, Jiawei},
-  journal={arXiv preprint arXiv:1908.03265},
-  year={2019}
+@inproceedings{liu2019radam,
+ author = {Liu, Liyuan and Jiang, Haoming and He, Pengcheng and Chen, Weizhu and Liu, Xiaodong and Gao, Jianfeng and Han, Jiawei},
+ booktitle = {Proceedings of the Eighth International Conference on Learning Representations (ICLR 2020)},
+ month = {April},
+ title = {On the Variance of the Adaptive Learning Rate and Beyond},
+ year = {2020}
 }
+
 ```
