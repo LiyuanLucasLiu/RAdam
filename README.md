@@ -84,6 +84,8 @@ RAdam is very easy to implement, we provide PyTorch implementations here, while 
 
 [Keras Implementation](https://github.com/titu1994/keras_rectified_adam)
 
+[Julia implementation in Flux.jl](https://fluxml.ai/Flux.jl/stable/training/optimisers/#Flux.Optimise.RADAM)
+
 ### Unofficial Introduction & Mentions
 
 We provide a simple introduction in [Motivation](#motivation), and more details can be found in our [paper](https://arxiv.org/abs/1908.03265). There are some unofficial introductions available (with better writings), and they are listed here for reference only (contents/claims in our paper are more accurate):
